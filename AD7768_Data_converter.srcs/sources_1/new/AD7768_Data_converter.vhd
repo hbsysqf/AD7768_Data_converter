@@ -49,27 +49,25 @@ process(DCLK_IN)
 begin
 
     if(DCLK_IN'event and DCLK_IN = '0') then 
-        data32(31 downto 1) <= data32(30 downto 0);
-        data32(0) <= DATA_IN;
-        data_valid <= '0';
+        data32(31 downto 1) <= data32(30 downto 0) after 1ns;
+        data32(0) <= DATA_IN after 1ns;
         if(DRDY_IN = '1') then
-            data_valid <= '1';
+            data_valid <= '1' after 1ns;
+        else
+            data_valid <= '0' after 1ns;
         end if;
         
     end if;
     
     if(DCLK_IN'event and DCLK_IN = '1' and data_valid = '1') then 
-        DATA_OUT <= data32;
-        DATA_RDY <= '1';
+        DATA_OUT <= data32 after 1ns;
     end if;
 
-    if(DCLK_IN'event and DCLK_IN = '1' and data_valid = '0') then 
-        DATA_RDY <= '0';
-    end if;
+
 
 end process;
 
-
+DATA_RDY <= data_valid after 1ns;
 
 end Behavioral;
 
