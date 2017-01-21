@@ -52,9 +52,9 @@ begin
         data32(31 downto 1) <= data32(30 downto 0) after 1ns;
         data32(0) <= DATA_IN after 1ns;
         if(DRDY_IN = '1') then
-            data_valid <= '1' after 1ns;
+            data_valid <= '1';
         else
-            data_valid <= '0' after 1ns;
+            data_valid <= '0';
         end if;
         
     end if;
